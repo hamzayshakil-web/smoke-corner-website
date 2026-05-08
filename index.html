@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SMOKE CORNER — Pakistan's Premium Vape & Pod Destination</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============ RESET ============ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: #0a0a0a;
+    color: #f4f4f4;
+    overflow-x: hidden;
+    line-height: 1.6;
+    position: relative;
+    min-height: 100vh;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  /* ============ ANIMATED SMOKE BACKGROUND ============ */
+  .smoke-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: #0a0a0a;
+    overflow: hidden;
+  }
+  .smoke-bg::before,
+  .smoke-bg::after {
+    content: "";
+    position: absolute;
+    width: 80vmax;
+    height: 80vmax;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.55;
+    mix-blend-mode: screen;
+  }
+  .smoke-bg::before {
+    background: radial-gradient(circle, rgba(204,0,0,0.55) 0%, rgba(255,34,0,0.15) 40%, transparent 70%);
+    top: -20%;
+    left: -20%;
+    animation: drift1 22s ease-in-out infinite alternate;
+  }
+  .smoke-bg::after {
+    background: radial-gradient(circle, rgba(255,34,0,0.45) 0%, rgba(204,0,0,0.15) 40%, transparent 70%);
+    bottom: -25%;
+    right: -25%;
+    animation: drift2 28s ease-in-out infinite alternate;
+  }
+  .smoke-blob {
+    position: absolute;
+    width: 60vmax;
+    height: 60vmax;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.35;
+    background: radial-gradient(circle, rgba(204,0,0,0.6) 0%, transparent 70%);
+    top: 40%;
+    left: 30%;
+    animation: drift3 35s ease-in-out infinite alternate;
+    mix-blend-mode: screen;
+  }
+  @keyframes drift1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(15vw, 10vh) scale(1.15); }
+    100% { transform: translate(-10vw, 20vh) scale(0.9); }
+  }
+  @keyframes drift2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-15vw, -10vh) scale(1.1); }
+    100% { transform: translate(10vw, -20vh) scale(0.95); }
+  }
+  @keyframes drift3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    50%  { transform: translate(-25vw, 15vh) scale(1.2); }
+    100% { transform: translate(20vw, -10vh) scale(0.85); }
+  }
+
+  /* ============ NAVBAR ============ */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid #cc0000;
+    box-shadow: 0 2px 20px rgba(255, 34, 0, 0.45);
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+    color: #ff2200;
+    text-shadow: 0 0 8px #cc0000, 0 0 16px #ff2200;
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: 26px;
+    list-style: none;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .nav-links a {
+    position: relative;
+    color: #f4f4f4;
+    transition: color .25s ease;
+  }
+  .nav-links a:hover { color: #ff2200; text-shadow: 0 0 8px #cc0000; }
+  .nav-links a::after {
+    content:"";
+    position:absolute;
+    left:0; bottom:-6px;
+    width:0; height:2px;
+    background:#ff2200;
+    box-shadow: 0 0 8px #ff2200;
+    transition: width .3s ease;
+  }
+  .nav-links a:hover::after { width:100%; }
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid #cc0000;
+    color: #ff2200;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px 80px;
+    overflow: hidden;
+  }
+  .hero-smoke {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .hero-smoke span {
+    position: absolute;
+    bottom: -150px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,34,0,0.45) 0%, rgba(204,0,0,0.12) 40%, transparent 70%);
+    filter: blur(40px);
+    opacity: 0;
+    animation: rise 12s linear infinite;
+  }
+  .hero-smoke span:nth-child(1) { left: 8%;  animation-delay: 0s; }
+  .hero-smoke span:nth-child(2) { left: 25%; animation-delay: 2s; width:280px; height:280px;}
+  .hero-smoke span:nth-child(3) { left: 45%; animation-delay: 4s; }
+  .hero-smoke span:nth-child(4) { left: 65%; animation-delay: 6s; width:300px; height:300px;}
+  .hero-smoke span:nth-child(5) { left: 82%; animation-delay: 8s; }
+  .hero-smoke span:nth-child(6) { left: 55%; animation-delay: 10s; width:260px; height:260px;}
+  @keyframes rise {
+    0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+    20%  { opacity: 0.65; }
+    80%  { opacity: 0.4; }
+    100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+  }
+
+  .new-arrival-badge {
+    display: inline-block;
+    margin-bottom: 22px;
+    padding: 8px 18px;
+    background: #cc0000;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 0.78rem;
+    border-radius: 4px;
+    box-shadow: 0 0 14px #ff2200, 0 0 28px rgba(255,34,0,0.6);
+    animation: flashBadge 1.4s ease-in-out infinite;
+  }
+  @keyframes flashBadge {
+    0%, 100% { opacity: 1; box-shadow: 0 0 14px #ff2200, 0 0 28px rgba(255,34,0,0.7); }
+    50%      { opacity: 0.4; box-shadow: 0 0 4px #ff2200, 0 0 8px rgba(255,34,0,0.2); }
+  }
+
+  .hero-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.6rem, 8vw, 6rem);
+    letter-spacing: 6px;
+    color: #fff;
+    text-shadow:
+      0 0 6px #ff2200,
+      0 0 14px #cc0000,
+      0 0 28px #cc0000,
+      0 0 50px #ff2200;
+    animation: flicker 3.5s infinite;
+    margin-bottom: 14px;
+    line-height: 1.1;
+  }
+  @keyframes flicker {
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+      text-shadow:
+        0 0 6px #ff2200,
+        0 0 14px #cc0000,
+        0 0 28px #cc0000,
+        0 0 50px #ff2200,
+        0 0 80px #ff2200;
+      opacity: 1;
+    }
+    20%, 24%, 55% {
+      text-shadow: none;
+      opacity: 0.55;
+    }
+  }
+
+  .hero-tagline {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.2vw, 1.4rem);
+    letter-spacing: 3px;
+    color: #ddd;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .hero-cta {
+    display: inline-block;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #cc0000, #ff2200);
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    border-radius: 6px;
+    box-shadow: 0 0 18px rgba(255,34,0,0.6), 0 0 36px rgba(204,0,0,0.4);
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px #ff2200, 0 0 50px #cc0000;
+  }
+
+  /* ============ SECTIONS ============ */
+  section {
+    position: relative;
+    padding: 90px 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: 4px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 0 8px #cc0000, 0 0 18px #ff2200;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .section-sub {
+    text-align: center;
+    color: #aaa;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    margin-bottom: 50px;
+    text-transform: uppercase;
+  }
+
+  /* ============ PRODUCT GRID ============ */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .product-card {
+    background: #111;
+    border: 1px solid #1f1f1f;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    border-color: #cc0000;
+    box-shadow: 0 0 18px rgba(255,34,0,0.5), 0 0 38px rgba(204,0,0,0.35);
+  }
+  .product-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-bottom: 1px solid #1f1f1f;
+  }
+  .product-body {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .product-name {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #ff2200;
+    text-shadow: 0 0 6px rgba(204,0,0,0.55);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .product-desc {
+    color: #bdbdbd;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
+    flex: 1;
+  }
+  .product-price {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 16px;
+    background: linear-gradient(135deg, #cc0000, #ff2200);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(255,34,0,0.55);
+    transition: transform .2s ease, box-shadow .25s ease;
+  }
+  .wa-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px #ff2200, 0 0 36px rgba(204,0,0,0.5);
+  }
+
+  /* ============ DEALS ============ */
+  .deals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .deal-card {
+    position: relative;
+    background: #111;
+    border: 1px solid #1f1f1f;
+    border-radius: 10px;
+    padding: 36px 26px 30px;
+    overflow: hidden;
+    text-align: center;
+    transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+  }
+  .deal-card:hover {
+    border-color: #cc0000;
+    transform: translateY(-6px);
+    box-shadow: 0 0 18px rgba(255,34,0,0.5);
+  }
+  .deal-ribbon {
+    position: absolute;
+    top: 18px;
+    right: -50px;
+    transform: rotate(40deg);
+    background: linear-gradient(135deg, #cc0000, #ff2200);
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    letter-spacing: 4px;
+    font-size: 0.78rem;
+    padding: 6px 60px;
+    box-shadow: 0 0 12px rgba(255,34,0,0.7);
+  }
+  .deal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #ff2200;
+    text-shadow: 0 0 8px rgba(204,0,0,0.6);
+    margin-bottom: 14px;
+    letter-spacing: 2px;
+  }
+  .deal-desc {
+    color: #bdbdbd;
+    margin-bottom: 18px;
+    font-size: 0.98rem;
+    min-height: 50px;
+  }
+  .deal-price {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+  .deal-old {
+    display: block;
+    margin-top: 4px;
+    color: #888;
+    font-size: 0.95rem;
+    text-decoration: line-through;
+    letter-spacing: 1px;
+  }
+
+  .flicker-fire {
+    display: inline-block;
+    animation: fireFlicker 1.6s infinite;
+    filter: drop-shadow(0 0 6px #ff2200);
+  }
+  @keyframes fireFlicker {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    25%      { opacity: 0.55; transform: scale(0.92); }
+    50%      { opacity: 1; transform: scale(1.06); }
+    75%      { opacity: 0.7; transform: scale(0.96); }
+  }
+
+  /* ============ CONTACT ============ */
+  .contact-wrap {
+    background: linear-gradient(180deg, rgba(204,0,0,0.06), rgba(10,10,10,0.6));
+    border: 1px solid #1f1f1f;
+    border-radius: 14px;
+    padding: 40px 32px;
+    box-shadow: 0 0 30px rgba(204,0,0,0.15);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+  }
+  .contact-item {
+    margin-bottom: 14px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+  }
+  .contact-item a {
+    color: #ff2200;
+    border-bottom: 1px dashed rgba(255,34,0,0.4);
+    transition: color .25s ease, border-color .25s ease;
+  }
+  .contact-item a:hover {
+    color: #fff;
+    border-bottom-color: #fff;
+  }
+  .contact-note {
+    margin-top: 18px;
+    color: #bdbdbd;
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+  .wa-big {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px 28px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff;
+    border-radius: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    box-shadow: 0 0 18px rgba(37,211,102,0.55), 0 0 36px rgba(18,140,126,0.35);
+    transition: transform .25s ease, box-shadow .25s ease;
+    text-align: center;
+  }
+  .wa-big:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px #25D366, 0 0 50px #128C7E;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: #050505;
+    border-top: 1px solid #1f1f1f;
+    padding: 36px 24px 24px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 18px 0 22px;
+    list-style: none;
+    font-size: 1.5rem;
+  }
+  .socials a {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #cc0000;
+    border-radius: 50%;
+    color: #ff2200;
+    transition: all .3s ease;
+    box-shadow: 0 0 8px rgba(204,0,0,0.4);
+  }
+  .socials a:hover {
+    background: #cc0000;
+    color: #fff;
+    box-shadow: 0 0 18px #ff2200;
+    transform: translateY(-2px);
+  }
+  .footer-copy {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .disclaimer {
+    color: #666;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  /* ============ FLOATING WHATSAPP ============ */
+  .float-wa {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 200;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 0 18px #25D366, 0 0 32px rgba(18,140,126,0.5);
+    animation: pulse 2.2s ease-in-out infinite;
+    transition: transform .25s ease;
+  }
+  .float-wa:hover { transform: scale(1.08); }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 18px #25D366, 0 0 32px rgba(18,140,126,0.5); }
+    50%      { box-shadow: 0 0 28px #25D366, 0 0 60px rgba(18,140,126,0.7); }
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .product-grid, .deals-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1fr; text-align: center; }
+  }
+  @media (max-width: 640px) {
+    .nav-toggle { display: inline-block; }
+    .nav-links {
+      position: absolute;
+      top: 100%;
+      right: 16px;
+      background: rgba(10,10,10,0.95);
+      border: 1px solid #cc0000;
+      border-radius: 8px;
+      padding: 18px 22px;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 0 18px rgba(255,34,0,0.5);
+      display: none;
+    }
+    .nav-links.open { display: flex; }
+    .product-grid, .deals-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 18px; }
+    .hero { min-height: 75vh; }
+    .float-wa { width: 56px; height: 56px; font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="smoke-bg" aria-hidden="true">
+  <div class="smoke-blob"></div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">SMOKE CORNER 🔥</div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#deals">Deals</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="home">
+  <div class="hero-smoke" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+  <span class="new-arrival-badge">★ NEW ARRIVALS ★</span>
+  <h1 class="hero-logo">SMOKE CORNER 🔥</h1>
+  <p class="hero-tagline">Pakistan's Premium Vape &amp; Pod Destination</p>
+  <a class="hero-cta" href="#products">Shop Now</a>
+</header>
+
+<!-- ============ PRODUCTS ============ -->
+<section id="products">
+  <h2 class="section-title">Our Products</h2>
+  <p class="section-sub">Authentic Pods · Disposables · Accessories</p>
+  <div class="product-grid" id="productGrid">
+    <!-- Products injected by JS -->
+  </div>
+</section>
+
+<!-- ============ DEALS ============ -->
+<section id="deals">
+  <h2 class="section-title">HOT DEALS <span class="flicker-fire">🔥</span></h2>
+  <p class="section-sub">Limited Time · Grab It Before It's Gone</p>
+  <div class="deals-grid">
+
+    <div class="deal-card">
+      <div class="deal-ribbon">SALE</div>
+      <h3 class="deal-title">Starter Bundle</h3>
+      <p class="deal-desc">Pod device + 2 pods + e-liquid — perfect for beginners.</p>
+      <div class="deal-price">Rs. 3,500
+        <span class="deal-old">Rs. 5,000</span>
+      </div>
+      <br>
+      <a class="wa-btn"
+         href="https://wa.me/923156019214?text=I%20want%20the%20Starter%20Bundle%20deal%20(Rs.%203%2C500)"
+         target="_blank" rel="noopener">📲 Grab Deal</a>
+    </div>
+
+    <div class="deal-card">
+      <div class="deal-ribbon">SALE</div>
+      <h3 class="deal-title">Disposable Pack of 3</h3>
+      <p class="deal-desc">Mix &amp; match any 3 disposables of your choice.</p>
+      <div class="deal-price">Rs. 2,800
+        <span class="deal-old">Rs. 3,600</span>
+      </div>
+      <br>
+      <a class="wa-btn"
+         href="https://wa.me/923156019214?text=I%20want%20the%20Disposable%20Pack%20of%203%20deal%20(Rs.%202%2C800)"
+         target="_blank" rel="noopener">📲 Grab Deal</a>
+    </div>
+
+    <div class="deal-card">
+      <div class="deal-ribbon">SALE</div>
+      <h3 class="deal-title">Weekend Special</h3>
+      <p class="deal-desc">Buy any device — get FREE pods worth Rs. 500.</p>
+      <div class="deal-price">FREE PODS
+        <span class="deal-old">Worth Rs. 500</span>
+      </div>
+      <br>
+      <a class="wa-btn"
+         href="https://wa.me/923156019214?text=I%20want%20the%20Weekend%20Special%20deal"
+         target="_blank" rel="noopener">📲 Grab Deal</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact">
+  <h2 class="section-title">ORDER NOW</h2>
+  <p class="section-sub">We Deliver in Bahawalpur</p>
+  <div class="contact-wrap">
+    <div class="contact-grid">
+      <div>
+        <p class="contact-item">📞 <a href="tel:03156019214">0315 601 9214</a></p>
+        <p class="contact-item">✉️ <a href="mailto:mmaaz9195@gmail.com">mmaaz9195@gmail.com</a></p>
+        <p class="contact-item">📍 Smoke Corner, Main Bazar, Bahawalpur, Punjab</p>
+        <p class="contact-item">⏰ Open Daily: 12 PM – 12 AM</p>
+        <p class="contact-note">Cash on Delivery available · Same-day delivery within city</p>
+      </div>
+      <div style="text-align:center;">
+        <a class="wa-big"
+           href="https://wa.me/923156019214"
+           target="_blank" rel="noopener">📲 Order on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <ul class="socials">
+      <li><a href="#" aria-label="Instagram" title="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="TikTok" title="TikTok">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.91a8.16 8.16 0 0 0 4.77 1.52V7a4.85 4.85 0 0 1-1.84-.31z"/></svg>
+      </a></li>
+      <li><a href="#" aria-label="Facebook" title="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.45 2.89h-2.33v6.99A10 10 0 0 0 22 12z"/></svg>
+      </a></li>
+    </ul>
+    <p class="footer-copy">© 2025 Smoke Corner — All Rights Reserved</p>
+    <p class="disclaimer">For adults 18+ only · Nicotine is addictive</p>
+  </div>
+</footer>
+
+<!-- ============ FLOATING WHATSAPP ============ -->
+<a class="float-wa" href="https://wa.me/923156019214" target="_blank" rel="noopener" title="Order on WhatsApp" aria-label="Order on WhatsApp">📲</a>
+
+<script>
+  /* ============ PRODUCT DATA ============ */
+  const products = [
+    { name: "RELX Infinity Pod Kit", price: "Rs. 2,500", desc: "Smooth hits, long battery, sleek design",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=RELX+Infinity" },
+    { name: "IQOS ILUMA One", price: "Rs. 7,500", desc: "Tobacco heated, not burned — premium experience",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=IQOS+ILUMA" },
+    { name: "Vuse Alto Pod Device", price: "Rs. 3,200", desc: "Bold flavors, easy draw, USB-C charging",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=Vuse+Alto" },
+    { name: "Juul2 Starter Kit", price: "Rs. 4,800", desc: "Compact, powerful, satisfying every time",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=JUUL2+Kit" },
+    { name: "Disposable Vape — 6000 Puffs", price: "Rs. 1,200", desc: "Mango, Lychee, Blueberry & more flavors",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=Disposable+6K" },
+    { name: "ELFBAR BC5000", price: "Rs. 1,500", desc: "Best-selling disposable, massive flavor variety",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=ELFBAR+5000" },
+    { name: "Caliburn G3 Pod System", price: "Rs. 3,800", desc: "Refillable, adjustable airflow, MTL perfection",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=Caliburn+G3" },
+    { name: "Naked 100 E-Liquid 60ml", price: "Rs. 1,000", desc: "Premium US e-liquid, rich tropical blends",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=Naked+100" },
+    { name: "Smok Nord 5 Pod Kit", price: "Rs. 5,500", desc: "Wattage control, dual coil, 2000mAh beast",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=Smok+Nord+5" },
+    { name: "VEEX V1 Pod Device", price: "Rs. 2,200", desc: "Lightweight everyday carry, satisfying nicotine",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=VEEX+V1" },
+    { name: "Crystal Bar 4000 Disposable", price: "Rs. 1,100", desc: "Crystal-clear casing, ice-cool menthol hits",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=Crystal+Bar" },
+    { name: "Oxbar Magic Maze Pro", price: "Rs. 9,500", desc: "Top-tier mesh coil, 10,000 puff beast mode",
+      img: "https://via.placeholder.com/400x300/1a1a1a/cc0000?text=Oxbar+Pro" }
+  ];
+
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = products.map(p => `
+    <article class="product-card">
+      <img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="product-body">
+        <h3 class="product-name">${p.name}</h3>
+        <p class="product-desc">${p.desc}</p>
+        <div class="product-price">${p.price}</div>
+        <a class="wa-btn"
+           href="https://wa.me/923156019214?text=${encodeURIComponent('I want to order: ' + p.name + ' (' + p.price + ')')}"
+           target="_blank" rel="noopener">📲 Order on WhatsApp</a>
+      </div>
+    </article>
+  `).join('');
+
+  /* ============ MOBILE NAV ============ */
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+</script>
+
+</body>
+</html>
